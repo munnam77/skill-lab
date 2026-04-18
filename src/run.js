@@ -26,10 +26,9 @@ function findEvals(root) {
   return results;
 }
 
-function runClaude(input, skill) {
+function runClaude(input) {
   return new Promise((resolve) => {
     const args = ['-p', input, '--output-format', 'json'];
-    if (skill) args.push('--skill', skill);
     const t0 = Date.now();
     execFile('claude', args, { maxBuffer: 50 * 1024 * 1024 }, (err, stdout) => {
       const elapsed = (Date.now() - t0) / 1000;
@@ -40,10 +39,15 @@ function runClaude(input, skill) {
       try {
         const data = JSON.parse(stdout);
         const usage = data.usage || {};
-        const model = data.model || 'default';
-        const price = PRICING[model] || PRICING.default;
-        const cost = (usage.input_tokens || 0) * price.input / 1e6
-                   + (usage.output_tokens || 0) * price.output / 1e6;
+        const models = Object.keys(data.modelUsage || {});
+        const model = models[models.length - 1] || 'default';
+        // Claude CLI returns pre-computed cost; use it when present.
+        let cost = typeof data.total_cost_usd === 'number' ? data.total_cost_usd : null;
+        if (cost === null) {
+          const price = PRICING[model] || PRICING.default;
+          cost = (usage.input_tokens || 0) * price.input / 1e6
+               + (usage.output_tokens || 0) * price.output / 1e6;
+        }
         resolve({
           ok: true,
           output: data.result || data.text || stdout,
@@ -102,7 +106,7 @@ async function runCommand(argv) {
       lastSkill = spec.skill;
     }
 
-    const run = await runClaude(spec.input, spec.skill);
+    const run = await runClaude(spec.input);
     const graded = grade(spec.expect || {}, run);
     totalCost += run.cost || 0;
 

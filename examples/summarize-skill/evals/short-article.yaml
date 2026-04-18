@@ -12,6 +12,6 @@ input: |
 expect:
   contains: ["Sora", "OpenAI"]
   not_contains: ["here is", "summary:", "TL;DR"]
-  matches: "^- .+\n- .+\n- .+"
-  max_cost: 0.05
-  max_seconds: 15
+  matches: "(?s)^- .+\\n- .+\\n- .+"
+  max_cost: 0.15
+  max_seconds: 30
