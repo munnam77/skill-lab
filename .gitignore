@@ -6,5 +6,4 @@ node_modules/
 .vscode/
 .idea/
 dist/
-.skill-lab/runs/
-.skill-lab/baseline.json
+.skill-lab/
