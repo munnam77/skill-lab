@@ -1,0 +1,20 @@
+skill: commit-msg
+name: bug-fix
+
+input: |
+  Write a commit message for this diff:
+
+  --- a/src/auth.js
+  +++ b/src/auth.js
+  @@ -12,7 +12,7 @@ function validateToken(token) {
+  -  if (token.length > 0) {
+  +  if (token && token.length > 0) {
+       return jwt.verify(token, SECRET);
+     }
+
+expect:
+  contains: ["fix"]
+  not_contains: ["BREAKING", "feat:", "```"]
+  matches: "^fix"
+  max_cost: 0.05
+  max_seconds: 15

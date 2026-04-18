@@ -1,0 +1,10 @@
+.DS_Store
+node_modules/
+*.log
+.env
+.env.local
+.vscode/
+.idea/
+dist/
+.skill-lab/runs/
+.skill-lab/baseline.json

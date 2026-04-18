@@ -1,0 +1,17 @@
+skill: summarize
+name: short-article
+
+input: |
+  Summarize this article:
+
+  OpenAI announced Sora 2 today, a new video generation model. It produces 60-second
+  clips at 4K resolution from text prompts. The model is gated behind a $200/month
+  Pro plan. Early testers report strong physics simulation and consistent character
+  identity across cuts. OpenAI says training took 40,000 H100 GPU-days.
+
+expect:
+  contains: ["Sora", "OpenAI"]
+  not_contains: ["here is", "summary:", "TL;DR"]
+  matches: "^- .+\n- .+\n- .+"
+  max_cost: 0.05
+  max_seconds: 15

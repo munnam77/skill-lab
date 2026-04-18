@@ -1,0 +1,32 @@
+{
+  "name": "skill-lab",
+  "version": "0.1.0",
+  "description": "Test your Claude skills like code. Eval harness, regression runs, diff reports.",
+  "bin": {
+    "skill-lab": "./bin/skill-lab.js"
+  },
+  "main": "src/index.js",
+  "scripts": {
+    "test": "node bin/skill-lab.js run examples"
+  },
+  "keywords": [
+    "claude",
+    "claude-code",
+    "skills",
+    "eval",
+    "testing",
+    "llm"
+  ],
+  "author": "munnam77",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/munnam77/skill-lab.git"
+  },
+  "engines": {
+    "node": ">=18"
+  },
+  "dependencies": {
+    "js-yaml": "^4.1.0"
+  }
+}
